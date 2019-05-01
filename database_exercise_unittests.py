@@ -67,7 +67,7 @@ class TestDatabase(unittest.TestCase):
         Test our connection to the database.
         """
         actual = self.connection
-        
+
         self.assertNotEqual(actual, None)
         
         
@@ -111,11 +111,18 @@ class TestDatabase(unittest.TestCase):
         Tests print query results.
         """
         actual = io.StringIO()
+
+        # redirecting stdout
         sys.stdout = actual
+
         query = [("1", "3"),
                  ("2", "2"),
                  ("3", "1"),]
         print_query(query)
+
+        # reset redirection
+        sys.stdout = sys.__stdout__  
+        
         expected = "('1', '3')\n('2', '2')\n('3', '1')\n"
 
         self.assertEqual(expected, actual.getvalue())
